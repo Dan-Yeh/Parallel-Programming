@@ -78,14 +78,12 @@ bool solveSuduko(uint8_t grid[N][N], int row, int col)
             {
                 uint8_t loc_grid[N][N];
                 memcpy(loc_grid, grid, N * N * sizeof(uint8_t));
-                #pragma omp taskgroup
                 #pragma omp task shared(solved)
                 {
                     if (solveSuduko(loc_grid, row, col + 1))
                     {
                         solved = true;
                         return_val = true;
-                        #pragma omp cancel taskgroup
                     }
                 }
             }
